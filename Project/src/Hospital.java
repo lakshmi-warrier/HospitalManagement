@@ -1,6 +1,6 @@
 package Project.src;
 
-public class sup {
+public class Hospital {
     public static void main(String[] args) {
         
     Nurses.main();
