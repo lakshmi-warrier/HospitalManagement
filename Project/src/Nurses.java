@@ -1,3 +1,7 @@
+//Contributed By Lakshmi Warrier
+//AM.EN.U4AIE20143
+//CSE(AI) | B - BATCH
+
 package Project.src;
 
 import java.io.*;
@@ -14,7 +18,6 @@ class Nurses implements Serializable {
     static File f = new File("nurses.dat");
     static ObjectOutputStream out = null;
     static Scanner sc = new Scanner(System.in);
-
 
     Nurses(String name, String gender, String qualification, String current_dept, int id, int duty_shift,
             double workexp, double salary, boolean is_senior) {
@@ -54,22 +57,20 @@ class Nurses implements Serializable {
         double salary = sc.nextDouble();
         Boolean is_senior = sc.nextBoolean();
 
-        for (Nurses nurse : nurseList) 
-        {
+        for (Nurses nurse : nurseList) {
             // no two nurse can have same ID
-            if (nurse.id == id) 
+            if (nurse.id == id)
                 System.out.println("Nurse with id " + id + " already exists. Name: " + nurse.name);
-        
-        }   
-        Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, id, duty_shift, workexp, salary, is_senior);
-                nurseList.add(NewNurse);     
+
+        }
+        Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, id, duty_shift, workexp, salary,
+                is_senior);
+        nurseList.add(NewNurse);
     }
 
-    static void delete_nurse(int id) 
-    {
-        for (Nurses nurse : nurseList) 
-        {
-            if (nurse.id == id )
+    static void delete_nurse(int id) {
+        for (Nurses nurse : nurseList) {
+            if (nurse.id == id)
                 nurseList.remove(nurse);
         }
     }
@@ -79,16 +80,14 @@ class Nurses implements Serializable {
         // get inputs
         int id = sc.nextInt();
 
-        for (Nurses nurse : nurseList) 
-        {
+        for (Nurses nurse : nurseList) {
             // no two nurse can have same ID
-            if (nurse.id == id) 
-            {
-                //System.out.println("Nurse with id " + id + " already exists. Name: " + nurse.name);
+            if (nurse.id == id) {
+                System.out.println("Nurse with id " + id + " already exists. Name: " + nurse.name);
                 Nurses oldNurse = nurse;
                 System.out.println("Enter new details ");
                 System.out.println(
-                "String name, String gender,String qualification,String current Dept.,int duty shift, double work exp, double salary, boolean is_senior");
+                        "String name, String gender,String qualification,String current Dept.,int duty shift, double work exp, double salary, boolean is_senior");
                 String name = sc.next();
                 String gender = sc.next();
                 String qualification = sc.next();
@@ -98,7 +97,8 @@ class Nurses implements Serializable {
                 double salary = sc.nextDouble();
                 Boolean is_senior = sc.nextBoolean();
 
-                Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, id, duty_shift, workexp, salary, is_senior);
+                Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, id, duty_shift, workexp, salary,
+                        is_senior);
                 nurseList.remove(oldNurse);
                 nurseList.add(NewNurse);
             }
@@ -110,6 +110,7 @@ class Nurses implements Serializable {
     }
 
     void set_vitals() {
+
         // patient.temp, patient.bp, patient.pulserate, patient.resprate
     }
 
@@ -124,8 +125,9 @@ class Nurses implements Serializable {
     static void writeData() {
         try {
             out = new ObjectOutputStream(new FileOutputStream(f));
-            for (Nurses i : nurseList) out.writeObject(i);
-            
+            for (Nurses i : nurseList)
+                out.writeObject(i);
+
             out.close();
 
         } catch (FileNotFoundException e) {
@@ -135,6 +137,11 @@ class Nurses implements Serializable {
         }
     }
 
+    static void use_equip(int id)
+    {
+        
+    }
+
     public String toString() // overriding the toString() method of Serializable interface
     {
         return "\n{id: " + id + ", name:" + name + ", Gender: " + gender + ", qualification: " + qualification
@@ -142,52 +149,58 @@ class Nurses implements Serializable {
                 + ", salary: " + salary + ", is_senior: " + is_senior + "}";
     }
 
-    public static void main() 
-    {
+    public static void main() {
         File f = new File("nurses.dat");
-Scanner sc = new Scanner(System.in);
-    try {
-        ObjectInputStream read = new ObjectInputStream(new FileInputStream(f));
-        //Nurses.nurseList.clear();
-        while (true) {
-            
-            Nurses.nurseList.add((Nurses) read.readObject());//automatically breaks when it reaches EOF as the exception is caught
+        Scanner sc = new Scanner(System.in);
+        try {
+            ObjectInputStream read = new ObjectInputStream(new FileInputStream(f));
+
+            // Nurses.nurseList.clear();
+            while (true) {
+
+                Nurses.nurseList.add((Nurses) read.readObject());// automatically breaks when it reaches EOF as the
+                                                                 // exception is caught
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found");
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-    } catch (FileNotFoundException e) {
-        System.out.println("File Not Found");
-    } catch (IOException e) {
-    } catch (ClassNotFoundException e) {
-        e.printStackTrace();
+
+        System.out.println(
+                "Enter choice: \n1.View Nurse\n2.Add Nurse\n3.Delete Nurse\n4.Update Nurse\n5.View Patient Record\n6.Create Patient Record\n7.Edit Patient Record\n8. Use equipment");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println(Nurses.nurseList);
+
+                break;
+            case 2:
+                Nurses.add_nurse();
+                break;
+
+            case 3:
+                System.out.print("Enter ID of the nurse to be deleted");
+                Nurses.delete_nurse(sc.nextInt());
+                break;
+
+            case 4:
+                Nurses.update_nurse();
+                break;
+            case 5, 6, 7:
+                break; // will add later
+            
+            case 8:
+                int equip_id = sc.nextInt();
+                use_equip(equip_id);
+                break;
+
+            default:
+                System.out.println("Invalid choice");
+        }
+        Nurses.writeData();
     }
 
-    System.out.println("Enter choice: \n1.View Nurse\n2.Add Nurse\n3.Delete Nurse\n4.Update Nurse\n5.View Patient Record\n6.Create Patient Record\n7.Edit Patient Record");
-    int choice = sc.nextInt();
-
-    switch (choice) 
-    {
-        case 1:
-            System.out.println(Nurses.nurseList);
-            break;
-        case 2:
-            Nurses.add_nurse();
-            break;
-
-        case 3:
-            System.out.print("Enter ID of the nurse to be deleted");
-            Nurses.delete_nurse(sc.nextInt());
-            break;
-
-        case 4:
-            Nurses.update_nurse();
-            break;
-        case 5,6,7: break; //will add later
-
-        default:
-            System.out.println("Invalid choice");
-    }
-    Nurses.writeData();
 }
-
-    }
-    
-    
