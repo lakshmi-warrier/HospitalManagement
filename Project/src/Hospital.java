@@ -15,7 +15,7 @@ public class Hospital {
                 Doctor.run();
                 break;
             case 2: 
-                //Patient.main();
+                Patient.run();
                 break;
             case 3:
                  Nurses.run();
