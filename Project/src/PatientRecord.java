@@ -18,7 +18,6 @@ public class PatientRecord implements Serializable {
         this.bloodGroup = bloodGroup;
         this.bedNumber = bedNumber;
         this.visitorsVisited = visitorsVisited;
-
         this.id = id;
         this.bedCharges = bedCharges;
         this.foodCharges = foodCharges;
@@ -57,6 +56,7 @@ public class PatientRecord implements Serializable {
                 PatientRecordList.remove(PatientRecord);
         }
     }
+
 
     static void edit_PatientRecord() {
         System.out.println("Enter ID of the PatientRecord to be updated");

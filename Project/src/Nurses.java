@@ -34,7 +34,8 @@ class Nurses implements Serializable {
     }
 
     static void create_patient_record() {
-        PatientRecord.create_record(sc.nextInt(), sc.next(), sc.next(), sc.nextInt(), sc.nextDouble());
+        PatientRecord.add_PatientRecord();
+        System.out.println("Added");
     }
 
     static void view_patient_record() {
@@ -119,17 +120,30 @@ class Nurses implements Serializable {
         }
     }
 
-    void get_vitals() {
-        // patient.temp, patient.bp, patient.pulserate, patient.resprate
-    }
+    static void get_vitals(int id) {
+        File pf = new File("patient.dat");
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Patient> patientlist = new ArrayList<>();
 
-    void set_vitals() {
+        try {
+            ObjectInputStream read = new ObjectInputStream(new FileInputStream(pf));
 
-        // patient.temp, patient.bp, patient.pulserate, patient.resprate
-    }
+            while (true) {
 
-    void change_bed() {
-        // patient.bed = "new bed"
+                patientlist.add((Patient) read.readObject());// automatically breaks when it reaches EOF as the
+                                                             // exception is caught
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found");
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        for (Patient pat : patientlist)
+            if (pat.id == id)
+                System.out.println("Name: " + pat.name + "\nBlood Group: " + pat.bloodgroup + "\nBP: "
+                        + pat.bloodpressure + "\nPulse Rate:" + pat.pulserate + "\nRespiration Rate: "
+                        + pat.respirationrate + "\nTemperature: " + pat.temperature);
     }
 
     static void writeData() {
@@ -153,11 +167,12 @@ class Nurses implements Serializable {
 
     public String toString() // overriding the toString() method of Serializable interface
     {
-        String seniority  = "Junior";
-        if(is_senior)  seniority = "Senior ";
+        String seniority = "Junior";
+        if (is_senior)
+            seniority = "Senior ";
 
-        return "\n" + id + " - " + name + "(" + gender + "), "+seniority+" \n" + qualification + ",  " + current_dept + ", "
-                + workexp +" years"+ "\nDuty shift: " + duty_shift + ", Salary P.A: " + salary
+        return "\n" + id + " - " + name + "(" + gender + "), " + seniority + " \n" + qualification + ",  "
+                + current_dept + ", " + workexp + " years" + "\nDuty shift: " + duty_shift + ", Salary P.A: " + salary
                 + "\n";
     }
 
@@ -200,9 +215,11 @@ class Nurses implements Serializable {
             case 4:
                 Nurses.update_nurse();
                 break;
-            case 5, 6, 7:
+            case 5, 7:
                 break; // will add later
-
+            case 6:
+                create_patient_record();
+                break;
             case 8:
                 int equip_id = sc.nextInt();
                 use_equip(equip_id);
@@ -214,4 +231,8 @@ class Nurses implements Serializable {
         Nurses.writeData();
     }
 
+    public static void main(String[] args) {
+
+        get_vitals(sc.nextInt());
+    }
 }
