@@ -116,7 +116,7 @@ public class Doctor implements Serializable {
 				+ salary + "}";
 	}
 
-	public static void main() {
+	public static void run() {
 		File f = new File("doctor.dat");
 		try {
 			ObjectInputStream read = new ObjectInputStream(new FileInputStream(f));

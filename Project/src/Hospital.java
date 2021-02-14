@@ -12,20 +12,20 @@ public class Hospital {
         switch(choice)
         {
             case 1:
-                Doctor.main();
+                Doctor.run();
                 break;
             case 2: 
                 //Patient.main();
                 break;
             case 3:
-                 Nurses.main();
+                 Nurses.run();
                 break;
             case 4:
                 //Equipment.main();
                 break;
             case 5:
-                
-                //Medicine.main();
+
+                Medicines.run();
                 break;
             default: 
                 System.out.println("Invalid Choice");

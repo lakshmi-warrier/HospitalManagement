@@ -134,11 +134,11 @@ public class Medicines implements Serializable {
 		}
 	}
 	public String toString() {
-		return "\nName: "+name+"\nID: "+id+"\nBrand: "+brand+", Type: "+type+
+		return "\nName: "+name+"\nID: "+id+"\nBrand: "+brand+"Type: "+type+
 				",\nComposition: "+composition+"\nDescription: "+description+
 				"\nDose: "+dose+"\nCost: Rs."+cost+" per unit\n";
 	}
-	public static void main(String args[]) {
+	public static void run() {
 		File f=new File("medicines.dat");
 		Scanner ob=new Scanner(System.in);
 		try {

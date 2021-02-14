@@ -9,7 +9,8 @@ import java.util.*;
 
 class Nurses implements Serializable {
 
-    String name, gender, qualification, current_dept;
+    String name, qualification, current_dept;
+    char gender;
     int id, duty_shift;
     double workexp, salary;
     boolean is_senior;
@@ -19,8 +20,8 @@ class Nurses implements Serializable {
     static ObjectOutputStream out = null;
     static Scanner sc = new Scanner(System.in);
 
-    Nurses(String name, String gender, String qualification, String current_dept, int id, int duty_shift,
-            double workexp, double salary, boolean is_senior) {
+    Nurses(String name, char gender, String qualification, String current_dept, int id, int duty_shift, double workexp,
+            double salary, boolean is_senior) {
         this.name = name;
         this.gender = gender;
         this.qualification = qualification;
@@ -42,30 +43,23 @@ class Nurses implements Serializable {
     }
 
     static void add_nurse() {
-        System.out.println(
-                "Enter String name, String gender,String qualification,String current_dept, int id,int duty_shift, double workexp, double salary, boolean is_senior");
 
-        // get inputs
-
-        String name = sc.next();
-        String gender = sc.next();
-        String qualification = sc.next();
-        String current_dept = sc.next();
+        Nurses NewNurse = acceptInp();
+        System.out.println("Enter ID");
         int id = sc.nextInt();
-        int duty_shift = sc.nextInt();
-        double workexp = sc.nextDouble();
-        double salary = sc.nextDouble();
-        Boolean is_senior = sc.nextBoolean();
+        NewNurse.id = id;
+        boolean can_add = true;
 
         for (Nurses nurse : nurseList) {
             // no two nurse can have same ID
-            if (nurse.id == id)
+            if (nurse.id == id) {
+                can_add = false;
                 System.out.println("Nurse with id " + id + " already exists. Name: " + nurse.name);
+            }
 
         }
-        Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, id, duty_shift, workexp, salary,
-                is_senior);
-        nurseList.add(NewNurse);
+        if (can_add)
+            nurseList.add(NewNurse);
     }
 
     static void delete_nurse(int id) {
@@ -75,30 +69,50 @@ class Nurses implements Serializable {
         }
     }
 
+    static Nurses acceptInp() {
+        System.out.println("Enter details:\nName:");
+        String name = sc.next();
+        // String name, char gender,String qualification,String current Dept.,int duty
+        // shift, double work exp, double salary, boolean is_senior
+        System.out.println("\nGender[M/F]: ");
+        char gender = sc.next().charAt(0);
+        gender = Character.toUpperCase(gender);
+        while (gender != 'M' && gender != 'F') {
+            System.out.println("Enter either M or F");
+            gender = sc.next().charAt(0);
+        }
+        System.out.println("Qualification: ");
+        String qualification = sc.next();
+        System.out.println("Current Department: ");
+        String current_dept = sc.next();
+        System.out.println("Duty Shift: ");
+        int duty_shift = sc.nextInt();
+        System.out.println("Work Experience: ");
+        double workexp = sc.nextDouble();
+        System.out.println("Salary P.A: ");
+        double salary = sc.nextDouble();
+        System.out.println("Is the nurse senior?[true/false]: ");
+        Boolean is_senior = sc.nextBoolean();
+
+        Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, 0, duty_shift, workexp, salary,
+                is_senior);
+
+        return NewNurse;
+    }
+
     static void update_nurse() {
         System.out.println("Enter ID of the nurse to be updated");
-        // get inputs
         int id = sc.nextInt();
 
         for (Nurses nurse : nurseList) {
             // no two nurse can have same ID
             if (nurse.id == id) {
-                System.out.println("Nurse with id " + id + " already exists. Name: " + nurse.name);
+                System.out.println("Id: " + id + "  Name: " + nurse.name);
                 Nurses oldNurse = nurse;
                 System.out.println("Enter new details ");
-                System.out.println(
-                        "String name, String gender,String qualification,String current Dept.,int duty shift, double work exp, double salary, boolean is_senior");
-                String name = sc.next();
-                String gender = sc.next();
-                String qualification = sc.next();
-                String current_dept = sc.next();
-                int duty_shift = sc.nextInt();
-                double workexp = sc.nextDouble();
-                double salary = sc.nextDouble();
-                Boolean is_senior = sc.nextBoolean();
 
-                Nurses NewNurse = new Nurses(name, gender, qualification, current_dept, id, duty_shift, workexp, salary,
-                        is_senior);
+                Nurses NewNurse = acceptInp();
+                NewNurse.id = id;// id is set to 0 in the method
                 nurseList.remove(oldNurse);
                 nurseList.add(NewNurse);
             }
@@ -118,10 +132,6 @@ class Nurses implements Serializable {
         // patient.bed = "new bed"
     }
 
-    static ArrayList<Nurses> getNurseList() {
-        return nurseList;
-    }
-
     static void writeData() {
         try {
             out = new ObjectOutputStream(new FileOutputStream(f));
@@ -137,25 +147,26 @@ class Nurses implements Serializable {
         }
     }
 
-    static void use_equip(int id)
-    {
-        
+    static void use_equip(int id) {
+
     }
 
     public String toString() // overriding the toString() method of Serializable interface
     {
-        return "\n{id: " + id + ", name:" + name + ", Gender: " + gender + ", qualification: " + qualification
-                + ", current_dept: " + current_dept + ", duty_shift: " + duty_shift + ", workexp: " + workexp
-                + ", salary: " + salary + ", is_senior: " + is_senior + "}";
+        String seniority  = "Junior";
+        if(is_senior)  seniority = "Senior ";
+
+        return "\n" + id + " - " + name + "(" + gender + "), "+seniority+" \n" + qualification + ",  " + current_dept + ", "
+                + workexp +" years"+ "\nDuty shift: " + duty_shift + ", Salary P.A: " + salary
+                + "\n";
     }
 
-    public static void main() {
+    public static void run() {
         File f = new File("nurses.dat");
         Scanner sc = new Scanner(System.in);
         try {
             ObjectInputStream read = new ObjectInputStream(new FileInputStream(f));
 
-            // Nurses.nurseList.clear();
             while (true) {
 
                 Nurses.nurseList.add((Nurses) read.readObject());// automatically breaks when it reaches EOF as the
@@ -191,7 +202,7 @@ class Nurses implements Serializable {
                 break;
             case 5, 6, 7:
                 break; // will add later
-            
+
             case 8:
                 int equip_id = sc.nextInt();
                 use_equip(equip_id);
