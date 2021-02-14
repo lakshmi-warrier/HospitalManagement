@@ -38,11 +38,6 @@ class Nurses implements Serializable {
         System.out.println("Added");
     }
 
-    static void view_patient_record() {
-        // creates patient record object and use show_record() function or prints the
-        // object that I will get from there
-    }
-
     static void add_nurse() {
 
         Nurses NewNurse = acceptInp();
@@ -57,7 +52,6 @@ class Nurses implements Serializable {
                 can_add = false;
                 System.out.println("Nurse with id " + id + " already exists. Name: " + nurse.name);
             }
-
         }
         if (can_add)
             nurseList.add(NewNurse);
@@ -161,10 +155,6 @@ class Nurses implements Serializable {
         }
     }
 
-    static void use_equip(int id) {
-
-    }
-
     public String toString() // overriding the toString() method of Serializable interface
     {
         String seniority = "Junior";
@@ -195,7 +185,7 @@ class Nurses implements Serializable {
         }
 
         System.out.println(
-                "Enter choice: \n1.View Nurse\n2.Add Nurse\n3.Delete Nurse\n4.Update Nurse\n5.View Patient Record\n6.Create Patient Record\n7.Edit Patient Record\n8. Use equipment");
+                "Enter choice: \n1.View Nurse\n2.Add Nurse\n3.Delete Nurse\n4.Update Nurse\n5.View Patient Record\n6.Create Patient Record\n7.Edit Patient Record\n8. Get vitals of patient");
         int choice = sc.nextInt();
 
         switch (choice) {
@@ -221,8 +211,8 @@ class Nurses implements Serializable {
                 create_patient_record();
                 break;
             case 8:
-                int equip_id = sc.nextInt();
-                use_equip(equip_id);
+                int patient_id = sc.nextInt();
+                get_vitals(patient_id);
                 break;
 
             default:
