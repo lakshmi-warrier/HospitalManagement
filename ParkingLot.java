@@ -1,3 +1,6 @@
+//Contributed by MONEESH NAGIREDDY
+//CSE(AI) | B - BATCH
+// AMRITA VISWA VIDYAPEETHAM
 import java.io.*;
 class ParkingLot
 {
@@ -9,7 +12,7 @@ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
  PrintWriter pw = new PrintWriter(new BufferedWriter(new
  FileWriter("parking.txt",true)));
  String name, v_number, pat_number, address;
- String s;
+ String s, left;
  boolean addMore = false, lot_status;
 
  do
@@ -30,21 +33,19 @@ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     s = br.readLine();
   if(s.equalsIgnoreCase("y"))
   {
-   addMore = true;
+   lot_status = true;
    System.out.println();
   }
   else
-   addMore = false;
- }
+   lot_status = false;
 
-  // Print to File
   pw.println(name);
   pw.println(v_number);
   pw.println(pat_number);
   pw.println(address);
   pw.println(lot_status);
   
-  System.out.print("\nLogs added successfully !\n\nDo you want to add more Logs ? (y/n) : ");
+  System.out.print("\nParking Logs updated successfully !\n\nDo you want to add more Logs ? (y/n) : ");
   s = br.readLine();
   if(s.equalsIgnoreCase("y"))
   {
@@ -53,18 +54,17 @@ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
   }
   else
    addMore = false;
- }
- while(addMore);
+ } while(addMore);
  pw.close();
  showMenu();
  }
+ 
  public void view_vehicles() throws IOException
  {
  try
  {
-  // Open the file
   BufferedReader file = new BufferedReader(new
-  FileReader("ParkingLot.txt"));
+  FileReader("parking.txt"));
   String name;
   int i=1;
   while((name = file.readLine()) != null)
@@ -75,7 +75,7 @@ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
    System.out.println("Vehicle Number : "+file.readLine());
    System.out.println("Phone Number : "+file.readLine());
    System.out.println("Address: "+file.readLine());
-   System.out.println("lot_status: "+file.readLine());
+   System.out.println("Car is in the Parking Lot : "+file.readLine());
    System.out.println();
   }
   file.close();
@@ -89,10 +89,9 @@ static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
  public void clear() throws IOException
  {
  PrintWriter pw = new PrintWriter(new BufferedWriter(new
- FileWriter("ParkingLot.txt")));
+ FileWriter("parking.txt")));
  pw.close();
  System.out.println("\nAll Logs cleared successfully !");
- for(int i=0;i<999999999;i++); 
  showMenu();
  }
  public void showMenu() throws IOException
