@@ -25,7 +25,7 @@ public class Hospital {
                 break;
             case 4:
                 System.out.println("Class by JITHIN JOHN");
-                Equipment.main();
+                //Equipment.run();
                 break;
             case 5:
                 System.out.println("Class by ANVITA REDDY INTURE");
@@ -34,12 +34,12 @@ public class Hospital {
                 
             case 6:
                 System.out.println("Class by N ABHINAY REDDY");
-                PatientRecords.run();
+                PatientRecord.run();
                 break;
                 
             case 7:
                 System.out.println("Class by N MONEESH");
-                ParkingLot.run();
+                //ParkingLot.run();
                 break;
             default: 
                 System.out.println("Invalid Choice");
