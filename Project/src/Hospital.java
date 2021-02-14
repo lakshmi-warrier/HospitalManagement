@@ -12,20 +12,34 @@ public class Hospital {
         switch(choice)
         {
             case 1:
+                System.out.println("Class by VUNDELA DEEPTHI SRI REDDY");
                 Doctor.run();
                 break;
             case 2: 
+                System.out.println("Class by PAPPALA KUMAR ADITYA");
                 Patient.run();
                 break;
             case 3:
+                 System.out.println("Class by LAKSHMI WARRIER");
                  Nurses.run();
                 break;
             case 4:
-                //Equipment.main();
+                System.out.println("Class by JITHIN JOHN");
+                Equipment.main();
                 break;
             case 5:
-
+                System.out.println("Class by ANVITA REDDY INTURE");
                 Medicines.run();
+                break;
+                
+            case 6:
+                System.out.println("Class by N ABHINAY REDDY");
+                PatientRecords.run();
+                break;
+                
+            case 7:
+                System.out.println("Class by N MONEESH");
+                ParkingLot.run();
                 break;
             default: 
                 System.out.println("Invalid Choice");
