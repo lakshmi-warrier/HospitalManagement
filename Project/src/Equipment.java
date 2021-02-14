@@ -1,21 +1,49 @@
-//Contributed By Jithin John
-//AM.EN.U4AIE20135
-//CSE(AI) | B - BATCH
+package Project.src;
+
 import java.io.*;
 import java.util.*;
-import java.util.Calendar;
 
-class equipment
-{
-    String equipment_id, equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit;
-    int equipment_room, equipment_total_used, equipment_success, equipment_failure;
+class Equipment implements Serializable {
+
+    int equipment_id;
+    String equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit;
+    int equipment_room;
+    int equipment_total_used = 0, equipment_success = 0, equipment_failure = 0;
     double  equipment_power;
-    void new_equipment()
-    {
+
+    static ArrayList<Equipment> EquipmentData = new ArrayList();
+    static File f = new File("Equipment.dat");
+    static ObjectOutputStream out = null;
+    static Scanner sc = new Scanner(System.in);
+
+
+    Equipment(int equipment_id, String equipment_name, String equipment_technician, String equipment_expiry, String equipment_daily_limit, 
+            int equipment_room, int equipment_total_used, int equipment_success, int equipment_failure,
+            double equipment_power)
+            {
+        this.equipment_id = equipment_id;
+        this.equipment_name = equipment_name;
+        this.equipment_technician = equipment_technician;
+        this.equipment_expiry = equipment_expiry;
+        this.equipment_daily_limit = equipment_daily_limit;
+        this.equipment_room = equipment_room;
+        this.equipment_total_used = equipment_total_used;
+        this.equipment_success = equipment_success;
+        this.equipment_failure = equipment_failure;
+        this.equipment_power = equipment_power;
+    }
+    
+    static void add_equipment() 
+        {
+            String equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit;
+    int  equipment_room, equipment_id;
+    int equipment_total_used = 0, equipment_success = 0, equipment_failure = 0;
+    double  equipment_power;
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the ID of the Equipment:-");
-        equipment_id = input.nextLine();
+        equipment_id = input.nextInt();
         System.out.print("Name of the Equipment :- ");
+        equipment_name = input.nextLine();
         equipment_name = input.nextLine();
         System.out.print("Who is the technician of this Equipment? :- ");
         equipment_technician = input.nextLine();
@@ -23,113 +51,199 @@ class equipment
         equipment_expiry = input.nextLine();
         System.out.print("Enter the daily limit of the Equipment(HH:MM) :-");
         equipment_daily_limit = input.nextLine();
-
         System.out.print("Enter the power of the equipment (in kWh) :-");
-        equipment_power = input.nextInt();
+        equipment_power = input.nextDouble();
         System.out.print("Enter the room number where it is placed :-");
         equipment_room = input.nextInt();
+
+
+        Equipment Newequipment = new Equipment(equipment_id, equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit, equipment_room,  equipment_total_used,  equipment_success, equipment_failure,  equipment_power);
+               EquipmentData.add(Newequipment); 
     }
-    void equipment_info()
-    {
-        System.out.println(equipment_id + "\t" + equipment_name + "\t\t\t" + equipment_technician + "     \t" + equipment_expiry + "    \t" + equipment_daily_limit + "       \t" + equipment_room+ "       \t" + equipment_power + "       \t" + equipment_total_used + "       \t" + equipment_success+"    \t\t" + equipment_failure);
-    }
-}
-public class Equipment
-{
-    public static void main(String args[])
-    {
-        String months[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-        Calendar calendar = Calendar.getInstance();
-        //To be used later
-        System.out.print("Date: " + months[calendar.get(Calendar.MONTH)] + " " + calendar.get(Calendar.DATE) + " " + calendar.get(Calendar.YEAR));
-        System.out.println("\t\t\t\t\t\tTime: " + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND));
-        int count1 = 4;
+    static void update_usage_equipment() {
+        System.out.println("Enter ID of the equipment to be updated in usage: ");
+        int id = sc.nextInt();
 
-        equipment[] d = new equipment[25];
-        int i;
-        for (i = 0; i < 25; i++)
-            d[i] = new equipment();
-        d[0].equipment_id = "21";
-        d[0].equipment_name = "X-Ray Machine";
-        d[0].equipment_technician = "Karthik";
-        d[0].equipment_expiry = "05/02/2053";
-        d[0].equipment_daily_limit = "09:00";
-        d[0].equipment_room = 17;
-        d[0].equipment_power = 3.6;
-        d[0].equipment_total_used = 424;
-        d[0].equipment_success = 398;
-        d[0].equipment_failure  = d[0].equipment_total_used - d[0].equipment_success;
-
-        d[1].equipment_id = "32";
-        d[1].equipment_name = "CT Scanner";
-        d[1].equipment_technician = "Sushant";
-        d[1].equipment_expiry = "31/01/2034";
-        d[1].equipment_daily_limit = "06:00";
-        d[1].equipment_room = 45;
-        d[1].equipment_power = 3.6;
-        d[1].equipment_total_used = 424;
-        d[1].equipment_success = 398;
-        d[1].equipment_failure  = d[1].equipment_total_used - d[1].equipment_success;
-
-        d[2].equipment_id = "17";
-        d[2].equipment_name = "Anesthesia Mchn";
-        d[2].equipment_technician = "Virat";
-        d[2].equipment_expiry = "23/08/2024";
-        d[2].equipment_daily_limit = "04:00";
-        d[2].equipment_room = 8;
-        d[2].equipment_power = 3.6;
-        d[2].equipment_total_used = 424;
-        d[2].equipment_success = 398;
-        d[2].equipment_failure  = d[2].equipment_total_used - d[2].equipment_success;
-
-        d[3].equipment_id = "33";
-        d[3].equipment_name = "Surgical Lights";
-        d[3].equipment_technician = "Anushka";
-        d[3].equipment_expiry = "12/12/2022";
-        d[3].equipment_daily_limit = "14:00";
-        d[3].equipment_room = 40;
-        d[3].equipment_power = 3.6;
-        d[3].equipment_total_used = 424;
-        d[3].equipment_success = 398;
-        d[3].equipment_failure  = d[3].equipment_total_used - d[3].equipment_success;
-
-
-        Scanner input = new Scanner(System.in);
-        int choice, j, c1, status = 1, s1 = 1;
-        while (status == 1)
+        for (Equipment equipment : EquipmentData) 
         {
-            System.out.println("\n                                    MAIN MENU");
-                       System.out.println("--------------------------------------------------------------------------------");
-                        System.out.println("                      **EQUIPMENT SECTION**");
-                        System.out.println("--------------------------------------------------------------------------------");
-                        s1 = 1;
-                        while (s1 == 1)
-                        {
-                            System.out.println("1.Add New Equipment\n2.Existing Equipments Details");
-                            c1 = input.nextInt();
-                            switch (c1)
-                            {
-                                case 1:
-                                    {
-                                        d[count1].new_equipment();count1++;
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
-                                        System.out.println("id \t Name\t\t\t  equipment_technician\tExpiry\t\tWorking Limit \tRoom No.\tPower \t     Total used \tSuccess\t\tFailure");
-                                        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
-                                        for (j = 0; j < count1; j++)
-                                        {
-                                            d[j].equipment_info();
-                                        }
-                                        break;
-                                    }
-                            }
-            System.out.println("\nReturn to MAIN MENU Press 1");
-            status = input.nextInt();
-                        }
+            if (equipment.equipment_id == id) 
+            {
+                String equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit;
+                int equipment_id , equipment_room;
+                int equipment_total_used = 0, equipment_success = 0, equipment_failure = 0;
+                double  equipment_power;
+                Scanner input = new Scanner(System.in);
+                Equipment oldequipment = equipment;
+                EquipmentData.remove(oldequipment);
+                equipment_id = equipment.equipment_id;
+                equipment_name = equipment.equipment_name;
+                equipment_technician = equipment.equipment_technician;
+                equipment_expiry = equipment.equipment_expiry;
+                equipment_daily_limit = equipment.equipment_daily_limit;
+                equipment_power = equipment.equipment_power;
+                equipment_room = equipment.equipment_room;
+                System.out.println("How many times were the Equipment used since last Update?");
+                int times, result;
+                times = input.nextInt();
+                System.out.print("How many times did it worked Successfully : ");
+                result = input.nextInt();
+                equipment_total_used = equipment.equipment_total_used+times;
+                   equipment_success =  equipment.equipment_success+result;
+               
+
+                Equipment Newequipment = new Equipment( equipment_id, equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit, equipment_room,  equipment_total_used,  equipment_success, equipment_failure,  equipment_power);
+   
+                EquipmentData.add(Newequipment);
+            }
         }
-       
     }
+    static void discard_equipment() {
+        System.out.println("Enter ID of the equipment to be discarded");
+        int id = sc.nextInt();
+
+        for (Equipment equipment : EquipmentData) 
+        {
+            if (equipment.equipment_id == id) 
+            {
+                String equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit;
+                int equipment_id , equipment_room;
+                int equipment_total_used = 0, equipment_success = 0, equipment_failure = 0;
+                double  equipment_power;
+                Scanner input = new Scanner(System.in);
+                Equipment oldequipment = equipment;
+                EquipmentData.remove(oldequipment);
+                equipment_id = equipment.equipment_id;
+                equipment_name = equipment.equipment_name;
+                equipment_technician = "Discarded";
+                equipment_expiry = "Discarded";
+                equipment_daily_limit = "Discarded";
+                equipment_power = 0.0;
+                equipment_room = 0;
+                equipment_total_used = 0;
+                equipment_success =  0;
+               
+
+            }
+        }
+    }
+    static void update_equipment() {
+        System.out.println("Enter ID of the equipment to be updated");
+        int id = sc.nextInt();
+
+        for (Equipment equipment : EquipmentData) 
+        {
+            if (equipment.equipment_id == id) 
+            {
+                String equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit;
+                int equipment_id , equipment_room;
+                int equipment_total_used = 0, equipment_success = 0, equipment_failure = 0;
+                double  equipment_power;
+                Scanner input = new Scanner(System.in);
+                Equipment oldequipment = equipment;
+                EquipmentData.remove(oldequipment);
+                System.out.println("Enter new details ");
+                System.out.print("Enter the ID of the Equipment:-");
+                equipment_id = input.nextInt();
+                System.out.print("Name of the Equipment :- ");
+                equipment_name = input.nextLine();
+                equipment_name = input.nextLine();
+                System.out.print("Who is the technician of this Equipment? :- ");
+                equipment_technician = input.nextLine();
+                System.out.print("Enter the Expiry date of the Equipment(DD/MM/YYYY) :-");
+                equipment_expiry = input.nextLine();
+                System.out.print("Enter the daily limit of the Equipment(HH:MM) :-");
+                equipment_daily_limit = input.nextLine();
+                System.out.print("Enter the power of the equipment (in kWh) :-");
+                equipment_power = input.nextDouble();
+                System.out.print("Enter the room number where it is placed :-");
+                equipment_room = input.nextInt();
+                equipment_success = equipment.equipment_success;
+                equipment_total_used = equipment.equipment_total_used;
+                Equipment Newequipment = new Equipment( equipment_id, equipment_name, equipment_technician, equipment_expiry, equipment_daily_limit, equipment_room,  equipment_total_used,  equipment_success, equipment_failure,  equipment_power);
+   
+                EquipmentData.add(Newequipment);
+            }
+        }
+    }
+
+    static ArrayList<Equipment> getEquipmentData() {
+        return EquipmentData;
+    }
+
+    static void writeData() {
+        try {
+            out = new ObjectOutputStream(new FileOutputStream(f));
+            for (Equipment i : EquipmentData) out.writeObject(i);
+            
+            out.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File Not Found");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String toString()
+    {
+        return ("\n" +equipment_id +"\t"+equipment_name+"\t\t"+ equipment_technician+"\t\t\t"+equipment_expiry+"\t\t"+equipment_daily_limit+"  \t\t"+equipment_power+"\t\t"+equipment_room+"\t\t"+equipment_total_used+"\t\t"+equipment_success);
+    }
+
+    public static void main() 
+    {
+        int c = 1;
+        File f = new File("Equipment.dat");
+Scanner sc = new Scanner(System.in);
+    try {
+        ObjectInputStream read = new ObjectInputStream(new FileInputStream(f));
+        while (true) {
+            
+            Equipment.EquipmentData.add((Equipment) read.readObject());
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println("File Not Found");
+    } catch (IOException e) {
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+do{
+    System.out.println("Enter choice: \n1.Detailed list of all Equipments\n2.Add a new equipment to the Hospital\n3.Update Usage Information of an equipment\n4.Update Equipment Details\n5.Discard Equipment from the Hospital\n");
+    System.out.println("Press 0 to exit");
+    int choice = sc.nextInt();
+ 
+
+    switch (choice) 
+    {
+        case 1:
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("id \t Name\t\t\tTechnician\t\tExpiry\t\tWorking Limit \t\tPower\t   Room No: \t     Total used \tSuccess");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println(Equipment.EquipmentData);
+            break;
+        case 2:
+            Equipment.add_equipment();
+            break;
+
+        case 3:
+            Equipment.update_usage_equipment();
+            break;
+
+        case 4:
+            Equipment.update_equipment();
+            break;
+
+        case 5:
+            Equipment.discard_equipment();
+            break;
+
+        default:
+            System.out.println("Invalid choice");
+    }
+ 
+    Equipment.writeData();
+System.out.println("\n");}while(c==1);
 }
+
+    }
+    
+    
