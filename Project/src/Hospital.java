@@ -39,7 +39,10 @@ public class Hospital {
                 
             case 7:
                 System.out.println("Class by N MONEESH");
-                //ParkingLot.run();
+                try {
+                    ParkingLot.run();
+                } catch (Exception e) {
+                }
                 break;
             default: 
                 System.out.println("Invalid Choice");
