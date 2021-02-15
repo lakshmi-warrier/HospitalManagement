@@ -192,7 +192,7 @@ class Equipment implements Serializable {
                 + equipment_room + "\t\t" + equipment_total_used + "\t\t" + equipment_success);
     }
 
-    public static void main() {
+    public static void run() {
         int c = 1;
         File f = new File("Equipment.dat");
         Scanner sc = new Scanner(System.in);

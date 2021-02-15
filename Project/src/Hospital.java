@@ -25,7 +25,7 @@ public class Hospital {
                 break;
             case 4:
                 System.out.println("Class by JITHIN JOHN");
-                //Equipment.run();
+                Equipment.run();
                 break;
             case 5:
                 System.out.println("Class by ANVITA REDDY INTURE");
